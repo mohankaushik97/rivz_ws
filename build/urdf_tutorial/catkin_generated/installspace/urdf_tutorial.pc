@@ -1,0 +1,8 @@
+prefix=/home/mohankaushik97/rviz_ws/install
+
+Name: urdf_tutorial
+Description: Description of urdf_tutorial
+Version: 0.4.0
+Cflags: 
+Libs: -L/home/mohankaushik97/rviz_ws/install/lib 
+Requires: 

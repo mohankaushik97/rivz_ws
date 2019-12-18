@@ -1,0 +1,8 @@
+prefix=/home/mohankaushik97/rviz_ws/install
+
+Name: lip_description
+Description: Description of lip_description
+Version: 0.0.0
+Cflags: 
+Libs: -L/home/mohankaushik97/rviz_ws/install/lib 
+Requires: 

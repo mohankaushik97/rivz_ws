@@ -1,0 +1,250 @@
+<?xml version="0.1"?>
+<robot name="edupi">
+
+	<macro name="cylinder_inertia" params="m r h">
+  	<inertia  ixx="${m*(3*r*r+h*h)/12}" ixy = "0" ixz = "0"
+    iyy="${m*(3*r*r+h*h)/12}" iyz = "0"
+    izz="${m*r*r/2}"/>
+	</macro>
+
+	<macro name="box_inertia" params="m x y z">
+	  <inertia  ixx="${m*(y*y+z*z)/12}" ixy = "0" ixz = "0"
+	    iyy="${m*(x*x+z*z)/12}" iyz = "0"
+	    izz="${m*(x*x+z*z)/12}"/>
+	</macro>
+
+	<macro name="sphere_inertia" params="m r">
+  	<inertia  ixx="${2*m*r*r/5}" ixy = "0" ixz = "0"
+  	  iyy="${2*m*r*r/5}" iyz = "0"
+  	  izz="${2*m*r*r/5}"/>
+	</macro>
+
+	<material name="blue">
+    <color rgba="0 0 0.8 2"/>
+  </material>
+
+	<material name="grey">
+    <color rgba="0.5 0.5 0.5 2"/>
+  </material>
+
+  <material name="red">
+    <color rgba="1 0 0 2"/>
+	</material>
+	
+	<material name="green">
+    <color rgba="0 1 0 2"/>
+	</material>
+
+	<material name="white">
+    <color rgba="1 1 1 2"/>
+	</material>
+
+	<material name="black">
+    <color rgba="0 0 0 2"/>
+	</material>
+
+  <link name="base_link">
+    
+		<inertial>
+			<mass value="0.1"/>
+			<inertia ixx="0.000480833" iyy="0.000334167" izz="0.000813333"
+				ixy="0" ixz="0" iyx="0" iyz="0" izx="0" izy="0"/>
+			<origin xyz="0 0 0"/>	
+		</inertial>
+
+		<visual>
+      <geometry>
+        <box size="0.2 0.24 0.01"/>
+      </geometry>
+			<origin xyz="0 0 0"/>
+			<material name="black"/>
+    </visual>
+
+		<collision>
+			<geometry>			
+				<box size="0.2 0.24 0.01"/>
+			</geometry>
+		</collision>
+  </link>
+
+	<link name="right_leg">
+		
+		<inertial>
+			<mass value="0.1"/>
+			<inertia ixx="0" iyy="0" izz="0" ixy="0" ixz="0" iyx="0" iyz="0" izx="0" izy="0"/>		
+			<origin xyz="-0.09 0.08 -0.045"/>		
+		</inertial>
+
+		<collision>
+			<geometry>
+				<box size="0.005 0.04 0.09"/>
+			</geometry>
+			<origin xyz="-0.09 0.08 -0.045"/>
+		</collision>
+
+		<visual>
+			<geometry>
+				<box size="0.005 0.04 0.09"/>
+			</geometry>
+			<origin xyz="-0.09 0.08 -0.045"/>
+			<material name="white"/>
+		</visual>
+	</link>
+
+	<joint name="base_to_right_leg" type="fixed">
+		<parent link="base_link"/>
+		<child link="right_leg"/>
+		<origin xyz="0 0 0"/>
+	</joint>
+
+	<link name="left_leg">
+		
+		<collision>
+			<geometry>	
+				<box size="0.005 0.04 0.09"/>
+			</geometry>
+			<origin xyz="0.09 0.08 -0.045"/>
+		</collision>
+
+		<inertial>
+			<mass value="0.1"/>
+			<inertia ixx="0" iyy="0" izz="0" ixy="0" ixz="0" iyx="0" iyz="0" izx="0" izy="0"/>
+		</inertial>
+
+		<visual>
+			<geometry>
+				<box size="0.005 0.04 0.09"/>
+			</geometry>
+			<origin xyz="0.09 0.08 -0.045"/>
+			<material name="white"/>				
+		</visual>
+	</link>
+
+	<joint name="base_to_left_leg" type="fixed">
+		<parent link="base_link"/>
+		<child link="left_leg"/>
+		<origin xyz="0 0 0"/>
+	</joint>
+
+	<link name="caster_leg">
+		<inertial>
+			<mass value="0.1"/>
+			<inertia ixx="0" iyy="0" izz="0" ixy="0" ixz="0" iyx="0" iyz="0" izx="0" izy="0"/>
+		</inertial>		
+
+		<collision>
+			<geometry>
+				<box size="0.04 0.04 0.1"/>
+			</geometry>
+			<origin xyz="0 -0.08 -0.045"/>
+		</collision>
+
+		<visual>
+			<geometry>
+				<box size="0.04 0.04 0.1"/>
+			</geometry>
+			<origin xyz="0 -0.08 -0.045"/>
+			<material name="blue"/>
+		</visual>
+	</link>
+
+	<joint name="base_to_caster_leg" type="fixed">
+		<parent link="base_link"/>
+		<child link="caster_leg"/>
+		<origin xyz="0 0 0"/>
+	</joint>
+
+	<link name="caster">
+		<collision>
+			<geometry>
+				<sphere radius="0.005"/>
+			</geometry>
+			<origin xyz="0 0 0"/>
+		</collision>
+
+		<inertial>
+			<mass value="0.1"/>
+			<inertia ixx="0" iyy="0" izz="0" ixy="0" ixz="0" iyx="0" iyz="0" izx="0" izy="0"/>
+		</inertial>
+
+		<visual>
+			<geometry>
+				<sphere radius="0.005"/>
+			</geometry>
+			<origin xyz="0 0 0"/>
+			<material name="red"/>
+		</visual>
+	</link>
+
+	<joint name="caster_ball" type="fixed">
+		<parent link="caster_leg"/>
+		<child link="caster"/>
+		<origin xyz="0 -0.08 -0.095"/>
+	</joint>
+
+	<link name="right_wheel">
+		<collision>
+			<geometry>
+				<cylinder length="0.01" radius="0.035"/>
+			</geometry>
+			<origin rpy=" 0 1.57079633 0" xyz="0 0 0"/>
+		</collision>		
+
+		<inertial>
+			<mass value="0.1"/>
+			<inertia ixx="0" iyy="0" izz="0" ixy="0" ixz="0" iyx="0" iyz="0" izx="0" izy="0"/>			
+		</inertial>
+
+		<visual>
+			<geometry>
+				<cylinder length="0.01" radius="0.035"/>
+			</geometry>
+			<origin rpy=" 0 1.57079633 0" xyz="0 0 0"/>
+			<material name="grey"/>
+		</visual>
+	</link>
+
+	<joint name="right_wheel_joint" type="continuous">
+    <axis rpy="0 0 0" xyz="1 0 0"/>
+    <parent link="right_leg"/>
+    <child link="right_wheel"/>
+    <origin xyz="-0.1 0.08 -0.065" rpy="0 0 -0"/>
+	</joint>
+	
+	<link name="left_wheel">
+		<collision>
+			<geometry>
+				<cylinder length="0.01" radius="0.035"/>
+			</geometry>
+			<origin rpy=" 0 1.57079633 0" xyz="0 0 0"/>
+		</collision>		
+
+		<inertial>
+			<mass value="0.1"/>
+			<inertia ixx="0" iyy="0" izz="0" ixy="0" ixz="0" iyx="0" iyz="0" izx="0" izy="0"/>			
+		</inertial>
+		
+
+		<visual>
+			<geometry>
+				<cylinder length="0.01" radius="0.035"/>
+			</geometry>
+			<material name="grey"/>
+			<origin rpy="0 1.57079633 0" xyz="0 0 0"/>
+		</visual>
+	</link>
+
+	<joint name="left_wheel_joint" type="continuous">
+		<axis xyz="1 0 0"/>
+		<parent link="left_leg"/>
+		<child link="left_wheel"/>
+		<origin xyz="0.1 0.08 -0.065"/>
+	</joint>
+
+	<gazebo>
+		<plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+			<robotNamespace>/</robotNamespace>
+		</plugin>
+	</gazebo>
+
+</robot>

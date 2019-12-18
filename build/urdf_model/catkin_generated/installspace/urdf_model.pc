@@ -1,0 +1,8 @@
+prefix=/home/mohankaushik97/rviz_ws/install
+
+Name: urdf_model
+Description: Description of urdf_model
+Version: 0.0.1
+Cflags: 
+Libs: -L/home/mohankaushik97/rviz_ws/install/lib 
+Requires: 

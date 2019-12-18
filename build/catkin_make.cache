@@ -1,0 +1,2 @@
+joint_state_publisher/joint_state_publisher:lip_description:urdf_model:urdf_tutorial:using_markers
+-DCATKIN_DEVEL_PREFIX=/home/mohankaushik97/rviz_ws/devel -DCMAKE_INSTALL_PREFIX=/home/mohankaushik97/rviz_ws/install -G Unix Makefiles
